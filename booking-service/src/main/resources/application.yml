@@ -1,0 +1,41 @@
+server:
+  port: 9003
+
+spring:
+  application:
+    name: booking-service
+  config:
+    import: optional:configserver:http://localhost:8888
+  datasource:
+    password:
+    url: jdbc:mysql://localhost:3306/bookingservicedb
+    username: root
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: true
+
+resilience4j.circuitbreaker:
+  instances:
+    hotel-service:
+      automatic-transition-from-open-to-half-open-enabled: true
+      failure-rate-threshold: 80
+      minimum-number-of-calls: 5
+      permitted-number-of-calls-in-half-open-state: 4
+      sliding-window-size: 10
+      sliding-window-type: COUNT_BASED
+      wait-duration-in-open-state: 10s
+
+
+resilience4j.retry:
+  instances:
+    hotel-service:
+      maxAttempts: 5
+      waitDuration: 2s
+      enableExponentialBackoff: true
+      retryExceptions:
+        - org.springframework.web.client.HttpServerErrorException
+        - java.io.IOException
+
+
+

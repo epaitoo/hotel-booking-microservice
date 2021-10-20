@@ -1,0 +1,14 @@
+server:
+  port: 8765
+
+spring:
+  application:
+    name: API-GATEWAY
+  config:
+    import: optional:configserver:http://localhost:8888
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true

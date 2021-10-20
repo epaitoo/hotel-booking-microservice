@@ -1,0 +1,16 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: users-service
+  config:
+    import: optional:configserver:http://localhost:8888
+  datasource:
+    password:
+    url: jdbc:mysql://localhost:3306/userservicedb
+    username: root
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: true
