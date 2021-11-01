@@ -7,13 +7,20 @@ spring:
   config:
     import: optional:configserver:http://localhost:8888
   datasource:
-    password:
+    password: secret
     url: jdbc:mysql://localhost:3306/bookingservicedb
-    username: root
+    username: dev02
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate.ddl-auto: update
     show-sql: true
+
+  # Sample all request on ZipKin
+  sleuth:
+    sampler:
+      probability: 1.0
+      # Trace 10% of request on Zipkin
+      #probability: 0.1
 
 resilience4j.circuitbreaker:
   instances:

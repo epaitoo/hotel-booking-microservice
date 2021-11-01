@@ -7,10 +7,20 @@ spring:
   config:
     import: optional:configserver:http://localhost:8888
   datasource:
-    password:
+    password: secret
     url: jdbc:mysql://localhost:3306/userservicedb
-    username: root
+    username: dev02
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate.ddl-auto: update
     show-sql: true
+  #zipkin:
+    # Uncomment to send to zipkin, replacing 192.168.99.100 with your zipkin IP address
+    # baseUrl: https://192.168.99.100:9411/
+
+  # Trace all request on ZipKin
+  sleuth:
+    sampler:
+      probability: 1.0
+      # Trace 10% of request on Zipkin
+      #probability: 0.1

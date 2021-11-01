@@ -12,3 +12,9 @@ spring:
         locator:
           enabled: true
           lowerCaseServiceId: true
+  # Sample all request on ZipKin
+  sleuth:
+    sampler:
+      probability: 1.0
+      # Trace 10% of request on Zipkin
+      #probability: 0.1
