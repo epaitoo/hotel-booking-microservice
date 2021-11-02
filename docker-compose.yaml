@@ -1,0 +1,177 @@
+version: "3.9"
+
+# Microservice  Network
+networks:
+  ms-network:
+    name: ms-network
+    driver: bridge
+
+services:
+  # Database Service (Mysql)
+  mysqldb:
+    image: mysql:latest
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+    ports:
+      - "13306:3306"
+    networks:
+      - ms-network
+    volumes:
+      - db:/var/lib/mysql
+
+  # Service Registry
+  eureka-server:
+    image: epaitoo/hotel-microservice-service-registry:0.0.1-SNAPSHOT
+    restart: on-failure
+    ports:
+      - "8761:8761"
+    networks:
+      - ms-network
+    environment:
+      eureka.instance.hostname: eureka-server
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka
+
+
+  # Cloud Config Server
+  cloud-config-server:
+    image: epaitoo/spring-cloud-config-server:0.0.1-SNAPSHOT
+    restart: on-failure
+    ports:
+      - "8888:8888"
+    networks:
+      - ms-network
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+
+  # Hotel-service
+  hotel-service:
+    image: epaitoo/hotel-microservice-hotel-service:0.0.1-SNAPSHOT
+    restart: on-failure
+    ports:
+      - "9002:9002"
+    networks:
+      - ms-network
+    depends_on:
+      - eureka-server
+      - mysqldb
+      - cloud-config-server
+      - rabbitmq
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+      SPRING_CONFIG_IMPORT: optional:configserver:http://cloud-config-server:8888
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/hotelservicedb?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: secret
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL5InnoDBDialect
+      SPRING_JPA_HIBERNATE_DDL-AUTO: update
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+
+  # users-service
+  users-service:
+    image: epaitoo/users-service:0.0.1-SNAPSHOT
+    restart: on-failure
+    ports:
+      - "9001:9001"
+    networks:
+      - ms-network
+    depends_on:
+      - eureka-server
+      - mysqldb
+      - cloud-config-server
+      - rabbitmq
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+      SPRING_CONFIG_IMPORT: optional:configserver:http://cloud-config-server:8888
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/userservicedb?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: secret
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL5InnoDBDialect
+      SPRING_JPA_HIBERNATE_DDL-AUTO: update
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+
+  # booking-service
+  booking-service:
+    image: epaitoo/hotel-microservice-booking-service:0.0.1-SNAPSHOT
+    restart: on-failure
+    ports:
+      - "9003:9003"
+    networks:
+      - ms-network
+    depends_on:
+      - eureka-server
+      - mysqldb
+      - cloud-config-server
+      - rabbitmq
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+      SPRING_CONFIG_IMPORT: optional:configserver:http://cloud-config-server:8888
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/bookingservicedb?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: secret
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL5InnoDBDialect
+      SPRING_JPA_HIBERNATE_DDL-AUTO: update
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+
+  # API Gateway
+  api-gateway:
+    image: epaitoo/api-gateway:0.0.1-SNAPSHOT
+    restart: on-failure
+    ports:
+      - "8765:8765"
+    networks:
+      - ms-network
+    depends_on:
+      - eureka-server
+      - cloud-config-server
+      - rabbitmq
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+      SPRING_CONFIG_IMPORT: optional:configserver:http://cloud-config-server:8888
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+
+  # Zipkin Server
+  zipkin-server:
+    image: openzipkin/zipkin:latest
+    restart: on-failure
+    ports:
+      - "9411:9411"
+    networks:
+      - ms-network
+    depends_on:
+      - rabbitmq
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+
+  # RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3.5.5-management
+    restart: on-failure
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - ms-network
+
+
+
+volumes:
+  db:
+
+
+
+
