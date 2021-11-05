@@ -1,1 +1,1 @@
-# hotel-booking-microservice
+# HOTEL BOOKING MICROSERVICE
