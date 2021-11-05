@@ -107,7 +107,7 @@ services:
 
   # users-service
   users-service:
-    image: epaitoo/users-service:0.0.1-SNAPSHOT
+    image: epaitoo/hotel-microservice-users-service:0.0.1-SNAPSHOT
     deploy:
       resources:
         limits:
@@ -175,7 +175,7 @@ services:
 
   # API Gateway
   api-gateway:
-    image: epaitoo/api-gateway:0.0.1-SNAPSHOT
+    image: epaitoo/hotel-microservice-api-gateway:0.0.1-SNAPSHOT
     deploy:
       resources:
         limits:
