@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-config-server
+  labels:
+    app: cloud-config-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloud-config-server
+  template:
+    metadata:
+      labels:
+        app: cloud-config-server
+    spec:
+      containers:
+      - name: cloud-config-server
+        image: epaitoo/hotel-microservice-spring-cloud-config-server:0.0.1-SNAPSHOT
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8888
+        env:
+        - name: EUREKA_INSTANCE_PREFERIPADDRESS
+          value: "true"
+        - name: EUREKA_INSTANCE_HOSTNAME
+          value: eureka-0
+        - name: EUREKA_CLIENT_REGISTERWITHEUREKA
+          value: "true"
+        - name: EUREKA_CLIENT_FETCHREGISTRY
+          value: "true"
+        - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+          value: http://eureka-0.eureka.default.svc.cluster.local:8761/eureka
+        
+        
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-config
+spec:
+  ports:
+    - targetPort: 8888
+      port: 80
+  selector:
+    app: cloud-config-server
+

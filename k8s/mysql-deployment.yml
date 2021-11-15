@@ -1,0 +1,50 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate    
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: mysql:5.7
+        name: mysql
+        imagePullPolicy: Always
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials 
+              key: password  
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:        # Mounting voulume obtained from Persistent Volume Claim
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql #This is the path in the container on which the mounting will take place.
+      volumes:
+      - name: mysql-persistent-storage # Obtaining 'vloume' from PVC
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  selector:
+    app: mysql
+  clusterIP: None
+  ports:
+    - port: 3306
+      protocol: TCP
+      targetPort: 3306

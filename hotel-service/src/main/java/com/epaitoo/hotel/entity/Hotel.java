@@ -25,8 +25,8 @@ public class Hotel {
     @Column(name = "num_of_rooms_available")
     private Integer numOfRoomsAvailable;
 
-    @Column(name = "room_available_status", columnDefinition = "boolean default true")
-    private boolean roomsAvailableStatus;
+//    @Column(name = "room_available_status", columnDefinition = "boolean default true")
+//    private boolean roomsAvailableStatus;
 
     private Long userId;
     private String location;
@@ -34,7 +34,7 @@ public class Hotel {
 
 
     public Hotel updateWith(Hotel hotel) {
-        return new Hotel(this.id, hotel.name, hotel.totalNumOfRooms, hotel.numOfRoomsAvailable, hotel.roomsAvailableStatus,
+        return new Hotel(this.id, hotel.name, hotel.totalNumOfRooms, hotel.numOfRoomsAvailable,
                 hotel.userId, hotel.location, hotel.price);
     }
 

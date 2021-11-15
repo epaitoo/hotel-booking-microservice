@@ -7,8 +7,9 @@ spring:
   config:
     import: optional:configserver:http://localhost:8888
   datasource:
-    password: secret
-    url: jdbc:mysql://localhost:3306/hotelservicedb?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+    password: admin1234
+    #url: jdbc:mysql://localhost:3306/hotelservicedb?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://mysql:3306/hotelservicedb?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
     username: root
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
@@ -46,3 +47,13 @@ resilience4j.retry:
       retryExceptions:
         - org.springframework.web.client.HttpServerErrorException
         - java.io.IOException
+
+eureka:
+  instance:
+    preferIpAddress: true
+    hostname: eureka-0
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka-0.eureka.default.svc.cluster.local:8761/eureka

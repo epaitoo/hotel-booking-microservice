@@ -7,8 +7,9 @@ spring:
   config:
     import: optional:configserver:http://localhost:8888
   datasource:
-    password: secret
-    url: jdbc:mysql://localhost:3306/userservicedb?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+    password: admin1234
+#    url: jdbc:mysql://localhost:3306/userservicedb?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://mysql:3306/userservicedb?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
     username: root
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
@@ -27,3 +28,13 @@ spring:
       probability: 1.0
       # Trace 10% of request on Zipkin
       #probability: 0.1
+
+eureka:
+  instance:
+    preferIpAddress: true
+    hostname: eureka-0
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka-0.eureka.default.svc.cluster.local:8761/eureka

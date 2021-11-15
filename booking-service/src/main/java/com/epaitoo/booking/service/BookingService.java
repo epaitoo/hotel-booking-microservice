@@ -89,7 +89,7 @@ public class BookingService {
 
             // return the list of hotels
             return new Hotel(hotel.getId(), hotel.getName(), hotel.getTotalNumOfRooms(), hotel.getNumOfRoomsAvailable(),
-                    hotel.isRoomsAvailableStatus(), hotel.getUserId(), hotel.getLocation(), hotel.getPrice());
+                    hotel.getUserId(), hotel.getLocation(), hotel.getPrice());
         }).collect(Collectors.toList());
 
     }

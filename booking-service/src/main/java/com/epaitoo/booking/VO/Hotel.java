@@ -15,7 +15,7 @@ public class Hotel {
     private String name;
     private Integer totalNumOfRooms;
     private Integer numOfRoomsAvailable;
-    private boolean roomsAvailableStatus;
+//    private boolean roomsAvailableStatus;
     private Long userId;
     private String location;
     private BigDecimal price;
