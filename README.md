@@ -3,10 +3,11 @@
 This is the backend for the hotel booking application which utilizes the microservice architecture.
 Users can create their profile, register their Hotel and users can book for rooms which are available in the hotel.
 
+
 ## Features
-- Users Service with its own Database (More info [here](https://github.com/epaitoo/hotel-booking-microservice/tree/main/users-service))
-- Hotel Service with ite own Database (More info [here](https://github.com/epaitoo/hotel-booking-microservice/tree/main/hotel-service))
-- Booking Service with its own Database (More info [here](https://github.com/epaitoo/hotel-booking-microservice/tree/main/booking-service))
+- Users Service with its own Database (More info [here](https://github.com/epaitoo/hotel-booking-microservice/tree/main/users-service#readme))
+- Hotel Service with ite own Database (More info [here](https://github.com/epaitoo/hotel-booking-microservice/tree/main/hotel-service#readme))
+- Booking Service with its own Database (More info [here](https://github.com/epaitoo/hotel-booking-microservice/tree/main/booking-service#readme))
 - Service Registration and Discovery Server using [Spring Cloud Netflix - Eureka](https://spring.io/projects/spring-cloud-netflix) 
 - Api Gateway which acts a Load Balancer to route request coming from the client to a specific service. See more details [here](https://github.com/epaitoo/hotel-booking-microservice/tree/main/api-gateway)
 - Cloud Config Server: A central [git repository](https://github.com/epaitoo/hotel-booking-microservice/tree/main/spring-cloud-config-server) on Github to store configurations and make them available for each service
