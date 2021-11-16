@@ -35,3 +35,21 @@ Users can create their profile, register their Hotel and users can book for room
 
 ## Getting Started
 
+These instructions will get you a copy of the project up and running on your local machine.
+
+### Application Setup with Docker & Docker Compose
+
+- Click on the 'Clone or download' button and select 'Download Zip.'
+- At the root of the project is the `docker-compose.yaml` file which contains all the images for each service and its environment variables
+- Run the `docker-compose up` command in the terminal to get the project up and running.
+
+### Application Setup without Docker
+- Click on the 'Clone or download' button and select 'Download Zip.'
+- Make sure you have mysql installed your local machine. see how to install [here](https://dev.mysql.com/doc/refman/8.0/en/installing.html)
+- Open your fav IDE and navigate to <em>hotel-booking-service-registry Folder</em> and install dependancies from the pom.xml
+(NB: The Service Registry must be run first so that it can register other services which will be run later)
+- Navigate to the other services for instance, spring-cloud-config folder and install its dependacies and run. Do the same for all the remaining services.
+
+
+
+
