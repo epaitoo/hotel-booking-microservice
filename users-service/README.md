@@ -14,4 +14,11 @@ This service is responsible for the Users within the Microservice and it contain
 - View and Updating of a user
 - Delete a user
 
-### User Service Route Information
+### User Service Routes Information
+
+| Action                | URL                                                              | 
+| -------------         |:---------------------------------------------------------------: | 
+| Create a User (POST)  | http://localhost:{API-GATEWAY-PORT}/users-service/api/users      | 
+| Get User Info (GET)   | http://localhost:{API-GATEWAY-PORT}/users-service/api/users/{id} |   
+| Update User   (PUT)   | http://localhost:{API-GATEWAY-PORT}/users-service/api/users/{id} |  
+| Delete User (DELETE)  | http://localhost:{API-GATEWAY-PORT}/users-service/api/users/{id} | 
