@@ -7,7 +7,8 @@ This service is responsible for the Users within the Microservice and it contain
 - Run on Port `9001`
 - MySQL Database
 - Database Name: `userservicedb`
-
+- Eureka Client for Service Registration
+- DockerFile available 
 
 ## Features
 - User Registration
