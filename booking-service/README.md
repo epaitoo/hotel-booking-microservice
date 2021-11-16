@@ -8,6 +8,8 @@ It also interacts with both User Service and Hotel Service.
 - Run on Port `9003`
 - MySQL Database
 - Database Name: `bookingservicedb`
+- Eureka Client for Service Registration
+- DockerFile available 
 
 
 ## Features
