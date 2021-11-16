@@ -7,6 +7,8 @@ This service is responsible for the hotels which were created by users within th
 - Run on Port `9002`
 - MySQL Database
 - Database Name: `hotelservicedb`
+- Eureka Client for Service Registration
+- DockerFile available 
 
 
 ## Features
