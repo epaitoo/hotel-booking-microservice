@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  labels:
+    app: api-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+      - name: api-gateway
+        image: epaitoo/hotel-microservice-api-gateway:0.0.2-RELEASE
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8765
+        env:
+        - name: SPRING_CONFIG_IMPORT 
+          value: optional:configserver:http://config-server:8888
+        - name: EUREKA_INSTANCE_PREFERIPADDRESS
+          value: "true"
+        - name: EUREKA_INSTANCE_HOSTNAME
+          value: eureka-0
+        - name: EUREKA_CLIENT_REGISTERWITHEUREKA
+          value: "true"
+        - name: EUREKA_CLIENT_FETCHREGISTRY
+          value: "true"
+        - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+          value: http://eureka-0.eureka.default.svc.cluster.local:8761/eureka
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: api-gateway
+spec:
+  type: LoadBalancer
+  selector:
+    app: api-gateway
+  ports:
+  - port: 80
+    targetPort: 8765
+    protocol: TCP
+
