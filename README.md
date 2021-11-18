@@ -15,6 +15,7 @@ Users can create their profile, register their Hotel and users can book for room
 - Distributed Tracing with [Zipkin](https://zipkin.io/) to trace request across microservices
 - Containerization of Microservices with Docker and Docker Compose
 - Container Orchestration with Kubernetes. See K8s yaml files [here](https://github.com/epaitoo/hotel-booking-microservice/tree/main/k8s)
+- [Amazon Elastic Kubernetes Service (Amazon EKS)](https://aws.amazon.com/eks/) is used to deploy, manage and scale Kubernetes in the cloud
 
 ### Image of Hotel Booking Microservice Architecture
 
