@@ -20,17 +20,12 @@ Users can create their profile, register their Hotel and users can book for room
 
 ![Hotel Booking Microservice Architecture](https://res.cloudinary.com/epaitoo/image/upload/v1637055984/others/microservice-img.jpg "Microservice Architecture Diagram")
 
-## Services and Ports 
+## API Documentation & Live Preview
+Try out the API Endpoint: 
 
-| Service Name        |     Port      | 
-| -------------       |:-------------:| 
-| User Service        | 9001          | 
-| Hotel Service       | 9002          |   
-| Booking Service     | 9003          | 
-| Eureka Server       | 8761          |  
-| Api Gateway         | 8765          |  
-| Cloud Config Server | 8888          |  
-| Zipkin Server       | 9411          |
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7868806-4b756402-d947-4272-84c3-539335e5eeb3?action=collection%2Ffork&collection-url=entityId%3D7868806-4b756402-d947-4272-84c3-539335e5eeb3%26entityType%3Dcollection%26workspaceId%3D88fe0bf2-c56f-4b60-8217-5f4164b5461d)
+
+API Documentation [here](https://documenter.getpostman.com/view/7868806/UVCCeP6Y) 
 
 
 
