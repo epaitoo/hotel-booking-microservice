@@ -47,11 +47,17 @@ public class HotelService {
                 });
     }
 
+
     public void delete(Long id) {
         log.info("Inside delete of HotelService");
         hotelRepository.deleteById(id);
     }
 
+    /**
+     * get user and hotel info
+     * @param id of the hotel
+     * @return the ResponseTemplateVO object
+     */
     public ResponseTemplateVO getHotelWithUserInfo(Long id) {
         log.info("Inside getHotelWithUserInfo of HotelService");
         ResponseTemplateVO vo = new ResponseTemplateVO();
@@ -65,6 +71,12 @@ public class HotelService {
         return vo;
     }
 
+    /**
+     * Update the number of rooms
+     * @param id of the hotel
+     * @param numOfRoom
+     * @return new number of rooms for the hotel
+     */
     public int updateNumOfRoomsAvailable(long id, int numOfRoom) {
         return hotelRepository.setNumOfRoomsAvailable(id, numOfRoom);
     }

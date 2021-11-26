@@ -10,14 +10,6 @@ services:
   # Database Service (Mysql)
   mysqldb:
     image: mysql:latest
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 300M
-        reservations:
-          cpus: '0.25'
-          memory: 100M
     restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=secret
@@ -31,14 +23,6 @@ services:
   # Service Registry
   eureka-server:
     image: epaitoo/hotel-microservice-service-registry:0.0.1-SNAPSHOT
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 512M
-        reservations:
-          cpus: '0.25'
-          memory: 100M
     restart: on-failure
     ports:
       - "8761:8761"
@@ -53,14 +37,6 @@ services:
   # Cloud Config Server
   cloud-config-server:
     image: epaitoo/spring-cloud-config-server:0.0.1-SNAPSHOT
-    deploy:
-      resources:
-        limits:
-          cpus: '0.06'
-          memory: 50M
-        reservations:
-          cpus: '0.01'
-          memory: 20M
     restart: on-failure
     ports:
       - "8888:8888"
@@ -74,14 +50,6 @@ services:
   # Hotel-service
   hotel-service:
     image: epaitoo/hotel-microservice-hotel-service:0.0.1-SNAPSHOT
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 512M
-        reservations:
-          cpus: '0.15'
-          memory: 100M
     restart: on-failure
     ports:
       - "9002:9002"
@@ -108,14 +76,6 @@ services:
   # users-service
   users-service:
     image: epaitoo/hotel-microservice-users-service:0.0.1-SNAPSHOT
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 512M
-        reservations:
-          cpus: '0.15'
-          memory: 100M
     restart: on-failure
     ports:
       - "9001:9001"
@@ -142,14 +102,6 @@ services:
   # booking-service
   booking-service:
     image: epaitoo/hotel-microservice-booking-service:0.0.1-SNAPSHOT
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 512M
-        reservations:
-          cpus: '0.15'
-          memory: 100M
     restart: on-failure
     ports:
       - "9003:9003"
@@ -176,14 +128,6 @@ services:
   # API Gateway
   api-gateway:
     image: epaitoo/hotel-microservice-api-gateway:0.0.1-SNAPSHOT
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 512M
-        reservations:
-          cpus: '0.15'
-          memory: 100M
     restart: on-failure
     ports:
       - "8765:8765"
@@ -204,14 +148,6 @@ services:
   # Zipkin Server
   zipkin-server:
     image: openzipkin/zipkin:latest
-    deploy:
-      resources:
-        limits:
-          cpus: '0.10'
-          memory: 300M
-        reservations:
-          cpus: '0.05'
-          memory: 100M
     restart: on-failure
     ports:
       - "9411:9411"
@@ -225,14 +161,6 @@ services:
   # RabbitMQ
   rabbitmq:
     image: rabbitmq:3.5.5-management
-    deploy:
-      resources:
-        limits:
-          cpus: '0.10'
-          memory: 50M
-        reservations:
-          cpus: '0.01'
-          memory: 20M
     restart: on-failure
     ports:
       - "5672:5672"

@@ -23,24 +23,44 @@ public class HotelController {
     @Autowired
     private HotelService hotelService;
 
+    /**
+     * Returns a Lists of Hotels
+     * @return List of Hotels
+     */
     @GetMapping
     public List<Hotel> findAllHotels() {
         log.info("Inside findAllHotels of HotelController");
         return hotelService.findAll();
     }
 
+    /**
+     * Create a Hotel
+     * @param hotel hotel
+     * @return the new hotel
+     */
     @PostMapping
     public Hotel saveHotel(@RequestBody Hotel hotel) {
         log.info("Inside saveHotel of HotelController");
         return hotelService.saveHotel(hotel);
     }
 
+    /**
+     * Get a Hotel
+     * @param id of the hotel
+     * @return a single hotel resource
+     */
     @GetMapping("/{id}")
     public Hotel getHotelById(@PathVariable("id") Long id) {
         log.info("Inside getHotelById of HotelController");
         return hotelService.findHotelById(id);
     }
 
+    /**
+     * Updates a Hotel
+     * @param id of the hotel
+     * @param newHotel information
+     * @return newHotel Information
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Hotel> updateHotel(@PathVariable("id") Long id, @RequestBody Hotel newHotel) {
         log.info("Inside updateHotel of HotelController");
@@ -57,6 +77,11 @@ public class HotelController {
 
     }
 
+    /**
+     * Deletes a Hotel
+     * @param id of the hotel
+     * @return noContent Response
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Hotel> delete(@PathVariable("id") Long id) {
         log.info("Inside delete of HotelController");
@@ -64,6 +89,11 @@ public class HotelController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Get the hotel and its User information
+     * @param id of the hotel
+     * @return the hotel and its user
+     */
     @GetMapping("/user/{id}")
     @CircuitBreaker(name = "user-service", fallbackMethod = "userServiceFallBackMethod")
     @Retry(name = "user-service", fallbackMethod = "userServiceFallBackMethod")
@@ -71,6 +101,13 @@ public class HotelController {
         return ResponseEntity.ok(hotelService.getHotelWithUserInfo(id));
     }
 
+    /**
+     * Update the number of Room for a hotel
+     * @param id of the hotel
+     * @param newRoomsNum
+     * @return the new number of rooms or 0 if room num is less than 0
+     *
+     */
     @PutMapping("/update-num-of-rooms/{id}")
     public ResponseEntity<Integer> updateNumOfRooms(@PathVariable("id") Long id, @RequestBody int newRoomsNum) {
         int rowUpdated = hotelService.updateNumOfRoomsAvailable(id, newRoomsNum);
@@ -81,6 +118,11 @@ public class HotelController {
     }
 
 
+    /**
+     * Fallback Method for getHotelWithUserInfo method
+     * @param e Exception
+     * @return a bad request response
+     */
     public ResponseEntity<ResponseTemplateVO> userServiceFallBackMethod(Exception e) {
         return ResponseEntity.badRequest().body(hotelService.hotelsWithUserInfoFallBackMethod());
     }
